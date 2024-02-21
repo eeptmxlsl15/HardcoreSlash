@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 //레벨업창을 키고 닫는 스크립트
 //순서는 직업 전용 액티브 스킬 - 공용 패시브 스킬 - 전직 스킬
 //직업이 추가될떄마다 바꾸자,,,
@@ -67,8 +68,8 @@ public class LevelUp : MonoBehaviour
         else if (GameManager.instance.level == 0 && GameManager.instance.playerId == 1) //처음 고르는 전사인 경우
         {
             ran[0] = 3;//5개인경우 기이는 5지만 0 1 2 3 4이다
-            ran[1] = 4;
-            ran[2] = 5;
+            ran[1] = 3;
+            ran[2] = 3;
 
         }
         else if (GameManager.instance.level == 0 && GameManager.instance.playerId == 2) //처음 고르는 궁수인 경우
@@ -84,6 +85,12 @@ public class LevelUp : MonoBehaviour
             ran[1] = 10;
             ran[2] = 10;
 
+        }
+        else if ( GameManager.instance.PickSkills.Count == 5)
+        {
+            ran[0] = GameManager.instance.PickSkills[Random.Range(0, GameManager.instance.PickSkills.Count)];
+            ran[1] = GameManager.instance.PickSkills[Random.Range(0, GameManager.instance.PickSkills.Count)];
+            ran[2] = GameManager.instance.PickSkills[Random.Range(0, GameManager.instance.PickSkills.Count)];
         }
         else // 두번째부터
         {foreach(int items in GameManager.instance.AllSkills)
@@ -110,7 +117,7 @@ public class LevelUp : MonoBehaviour
         //3. 만렙 아이템의 경우 소비아이템으로 대체
             if(ranItem.level == ranItem.data.damages.Length)
             {
-                items[14].gameObject.SetActive(true);
+                //items[14].gameObject.SetActive(true);
             }
             else
             {

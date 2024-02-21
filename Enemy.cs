@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 /// <summary>
 /// 몬스터 스크립트
 /// </summary>
@@ -11,7 +12,7 @@ public class Enemy : MonoBehaviour
     public float maxHealth;
     public RuntimeAnimatorController[] animCon;
     public Rigidbody2D target;
-
+    public Slider healthBarSlider;
     bool isLive;
     
     Rigidbody2D rigid;
@@ -95,6 +96,7 @@ public class Enemy : MonoBehaviour
             return;
 
         health -= collision.GetComponent<Bullet>().damage;//데미지를 줌
+        
         StartCoroutine(KnockBack());
 
         if (health > 0)//몹이 살아있을때
@@ -111,13 +113,13 @@ public class Enemy : MonoBehaviour
             anim.SetBool("Dead",true);
             GameManager.instance.kill++;//사망했을때 킬수 추가
             GameManager.instance.GetExp();
-            //weapon.SmiteDead(transform);
             //내가 따로 추가한 부분
             if (shadow != null)
             {
                 shadow.gameObject.SetActive(false);
             }
             
+            //weapon.SmiteDead(transform);
             Invoke("Dead",15f);//n초후 이하의 함수 실행
             //여기까지
 

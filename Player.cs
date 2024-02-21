@@ -35,6 +35,9 @@ public class Player : MonoBehaviour
     {
         if (!GameManager.instance.isLive)//시간이 멈췄다면 밑으로 안가서 시간이 흐르지 않음
             return;
+
+        
+
         inputVec.x = Input.GetAxisRaw("Horizontal"); //수평 수직 움직임
         inputVec.y = Input.GetAxisRaw("Vertical");
     }
@@ -64,8 +67,21 @@ public class Player : MonoBehaviour
     {
         if (!GameManager.instance.isLive)//게임이 실행되고 있어야한다는 필터
             return;
-
-        GameManager.instance.health -= Time.deltaTime * 10;
+        /*이즈 벙커 써서 해야할듯
+        // 플레이어가 Bunker에 있을 때만 자식 오브젝트 비활성화
+        if (collision.gameObject.CompareTag("Bunker"))
+        {
+            DisableChildObjectsFromIndex(4); // 4번째 자식 오브젝트부터 모두 비활성화
+        }
+        else
+        {
+            EnableAllChildObjects(); // Bunker에 없는 경우 모든 자식 오브젝트를 활성화
+        }
+        */
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            GameManager.instance.health -= Time.deltaTime * 10;
+        }
 
         if (GameManager.instance.health < 0)//플레이어가 죽을 경우 플레이어의 자식들을 비활성화 해야함
         {
@@ -76,6 +92,22 @@ public class Player : MonoBehaviour
 
             anim.SetTrigger("Dead");//애니메이션 실행
             GameManager.instance.GameOver();
+        }
+    }
+
+    void DisableChildObjectsFromIndex(int startIndex)
+    {
+        for (int index = startIndex; index < transform.childCount; index++)
+        {
+            transform.GetChild(index).gameObject.SetActive(false);
+        }
+    }
+
+    void EnableAllChildObjects()
+    {
+        for (int index = 0; index < transform.childCount; index++)
+        {
+            transform.GetChild(index).gameObject.SetActive(true);
         }
     }
 }

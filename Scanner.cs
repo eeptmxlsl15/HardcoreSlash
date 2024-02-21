@@ -9,14 +9,17 @@ public class Scanner : MonoBehaviour
     public RaycastHit2D[] targets;//다수를 검색해야해서 배열
     public Transform nearsetTarget;//가장 가까운 타겟
     public Transform randomTarget;
-
+    
     void FixedUpdate()
     {
         targets = Physics2D.CircleCastAll(transform.position, scanRange, Vector2.zero, 0, targetLayer);
         //원형 형태로 검색하겠다. 
         //캐스팅 시작 위치, 원의 반지름(검색 범위),캐스팅 방향(쏘는 방향),쏘는 방향의 길이(사거리),대상 레이어
         nearsetTarget = GetNearest(); // 검색한 것들 중 가장 가까운 것.
-        randomTarget = GetRandom();
+        if (transform.Find("Weapon 8") != null)
+        {
+            randomTarget = GetRandom();
+        }
     }
 
     Transform GetNearest()

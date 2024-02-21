@@ -25,17 +25,24 @@ public class GameManager : MonoBehaviour
     public int level;
     public int kill;
     public int exp;
+    public float baseDamage;
+    public float incDamage;
+    public float projectileSpeed = 15f;
+    public int projectileNum;
     public int criticalChance=0;
-    public int criticalMultiple=2;
+    public float criticalMultiple;
     public int Range=1;//공격 범위
-    public int[] nextExp = { 10, 30, 60, 100, 150, 210, 280, 360, 450, 600 };
+    public float MoveSpeedPerDmg;//불렛에서 이것에 이속을 곱한 것을 추가 데미지로 쓴다
+    public int difficult;//게임 난이도. 1 2 3 
+    public float nowDamage;
+    public int[] nextExp = { 10,  30, 60, 100, 150, 210, 280, 360, 450, 600 };
 
     public List<int> MuinSkills = new List<int> { 0, 1, 2 };
     public List<int> WarrorSkills = new List<int> { 3,4,5 };
     public List<int> ArcherSkills = new List<int> { 6,7,8 };
     public List<int> AssassinSkills = new List<int> { 9,10};
     public List<int> AllSkills = new List<int> { 12,13,14,15 };
-
+    public List<int> PickSkills;
 
 
     void Awake()
@@ -86,8 +93,19 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Lose);//소리
     }
 
+    public void MapEnd() // 맵이 끝났을때 맵에 있는 몹들 제거
+    {
+        StartCoroutine(MapEndRoutine());
+    }
 
-    public void GameVictory() // 이이고 나서 몹들 전부 죽이는 함수
+    IEnumerator MapEndRoutine()
+    {
+        isLive = false;//시간  정지
+        enemyCleaner.SetActive(true);//모두 죽임 이때 경험치 얻는걸 방지해야함
+        yield return new WaitForSeconds(0.5f); // 0.5초 동안 몬스터가 죽는 모션
+        isLive = true;
+    }
+    public void GameVictory() // 이기고 나서 몹들 전부 죽이는 함수
     {
         StartCoroutine(GameVictoryRoutine());
     }
@@ -96,7 +114,7 @@ public class GameManager : MonoBehaviour
     {
         isLive = false;//시간  정지
         enemyCleaner.SetActive(true);//모두 죽임 이때 경험치 얻는걸 방지해야함
-        yield return new WaitForSeconds(0.5f); // 0.5초 동안 몬스터가 죽는 모션
+        yield return new WaitForSeconds(1f); // 0.5초 동안 몬스터가 죽는 모션
         uiResult.gameObject.SetActive(true);
         uiResult.Win();
         Stop();
@@ -127,13 +145,13 @@ public class GameManager : MonoBehaviour
 
         gameTime += Time.deltaTime;
         
-        //
+        /* 게임 시간으로 버틸떄
         if (gameTime > maxGameTime)
         {
             gameTime = maxGameTime;
             GameVictory();
         }
-
+        */
     }
 
 
@@ -141,7 +159,13 @@ public class GameManager : MonoBehaviour
     {
         if (!isLive)
             return;//이겨서 몹들이 다 죽을 때 경험치 얻는 것을 방지
-        exp++;
+        if (difficult == 1)
+            exp++;
+        else if (difficult == 2)
+            exp = exp + 2;
+        else if (difficult == 3)
+            exp = exp + 3;
+
         if (exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
             //실제 레벨과 최대레벨-1 사이중 작은게 나오는데 
             //실제 레벨이 최대레벨 보다 높은경우 최대 레벨-1의 경험치로 고정됨

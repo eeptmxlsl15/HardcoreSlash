@@ -8,11 +8,14 @@ public class Result : MonoBehaviour
 
     public void Lose()
     {
+        Debug.Log("lose");
         titles[0].SetActive(true);
     }
 
     public void Win()
     {
-        titles[1].SetActive(true);
+        Debug.Log("win");
+   
+           titles[1].SetActive(true);
     }
 }

@@ -42,15 +42,30 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.Melee:
                 
             case ItemData.ItemType.Range:
-                textDesc.text = string.Format(data.itemDesc,data.damages[level]*100,data.counts[level]);
+                textDesc.text = string.Format(data.itemDesc,data.damages[level],data.counts[level]);
                 break;
             case ItemData.ItemType.Glove:
             case ItemData.ItemType.Shoe:
                 textDesc.text = string.Format(data.itemDesc, data.damages[level]*100);
                 break;
+            case ItemData.ItemType.CriticalChance://직접 추가하는 것들 level 마다 값이 같은 것들
+            case ItemData.ItemType.MaxHealth:
+            case ItemData.ItemType.ProjectileSpeed:
+            case ItemData.ItemType.AddProjectile:
+            case ItemData.ItemType.BaseDamage:
+                textDesc.text = string.Format(data.itemDesc , data.damages[0]*(level+1));
+                break;
+            case ItemData.ItemType.CriticalMultiple:
+            case ItemData.ItemType.IncDamage:
+                textDesc.text = string.Format(data.itemDesc, (data.damages[0] * (level + 1))*100);
+                break;
+
+
+
             default:
                 textDesc.text = string.Format(data.itemDesc);
                 break;
+            
         }
 
     }
@@ -59,12 +74,15 @@ public class Item : MonoBehaviour
     public void OnClick() // 아이템이 선택 되었을때
     {
         Debug.Log(data.itemId);
+        if (!GameManager.instance.PickSkills.Contains(data.itemId))
+        {
+            GameManager.instance.PickSkills.Add(data.itemId);
+        }
+
         if (!GameManager.instance.AllSkills.Contains(data.itemId))
         {
             GameManager.instance.AllSkills.Add(data.itemId);
         }
-
-
 
         switch (data.itemType)
         {
@@ -78,8 +96,8 @@ public class Item : MonoBehaviour
                 }
                 else // 스킬의 데미지 레벨 업 수식
                 {
-                    float nextDamage = data.baseDamage;
-                    int nextCount = 0;
+                    float nextDamage = 0;
+                    int nextCount = 0; // 여기 base.count로 해야하는거 아닌지? 버그 생기면 고치기
                     int nextProjectileNum = 0;
 
                     nextDamage += data.damages[level];
@@ -91,6 +109,7 @@ public class Item : MonoBehaviour
                 break;
             case ItemData.ItemType.Glove:
             case ItemData.ItemType.Shoe:
+                
                 if (level == 0)
                 {
                     GameObject newWeapon = new GameObject();
@@ -108,6 +127,133 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.Heal:
                 GameManager.instance.health = GameManager.instance.maxHealth;//헬스 누르면 피 전부 참
                 break;
+            case ItemData.ItemType.CriticalChance:
+                Debug.Log(level);
+                if (level == 0)
+                {
+                    GameObject newWeapon = new GameObject();
+                    gear = newWeapon.AddComponent<Gear>();
+                    gear.Init(data);
+
+                }
+                else
+                {
+                    GameManager.instance.criticalChance += Mathf.FloorToInt(data.damages[level]);
+                }
+                level++;//레벨업 해줘야함
+                break;
+            case ItemData.ItemType.CriticalMultiple:
+                if (level == 0)
+                {
+                    GameObject newWeapon = new GameObject();
+                    gear = newWeapon.AddComponent<Gear>();
+                    gear.Init(data);
+
+                }
+                else
+                {
+                    GameManager.instance.criticalMultiple += data.damages[level];
+                }
+                level++;//레벨업 해줘야함
+                break;
+
+            case ItemData.ItemType.MaxHealth:
+                if (level == 0)
+                {
+                    GameObject newWeapon = new GameObject();
+                    gear = newWeapon.AddComponent<Gear>();
+                    gear.Init(data);
+
+
+                }
+                else
+                {
+                    GameManager.instance.maxHealth += data.damages[level];
+                    GameManager.instance.health += data.damages[level];
+                }
+                level++;//레벨업 해줘야함
+                break;
+            case ItemData.ItemType.ProjectileSpeed:
+                if (level == 0)
+                {
+                    GameObject newWeapon = new GameObject();
+                    gear = newWeapon.AddComponent<Gear>();
+                    gear.Init(data);
+
+
+                }
+                else
+                {
+                    
+                    GameManager.instance.projectileSpeed += data.damages[level];
+                }
+                level++;//레벨업 해줘야함
+                break;
+            case ItemData.ItemType.AddProjectile:
+                if (level == 0)
+                {
+                    GameObject newWeapon = new GameObject();
+                    gear = newWeapon.AddComponent<Gear>();
+                    gear.Init(data);
+
+
+                }
+                else
+                {
+
+                    GameManager.instance.projectileNum +=Mathf.FloorToInt( data.damages[level]);
+                }
+                level++;//레벨업 해줘야함
+                break;
+            case ItemData.ItemType.BaseDamage:
+                if (level == 0)
+                {
+                    GameObject newWeapon = new GameObject();
+                    gear = newWeapon.AddComponent<Gear>();
+                    gear.Init(data);
+
+
+                }
+                else
+                {
+
+                    GameManager.instance.baseDamage += Mathf.FloorToInt(data.damages[level]);
+                }
+                level++;//레벨업 해줘야함
+                break;
+            case ItemData.ItemType.IncDamage:
+                if (level == 0)
+                {
+                    GameObject newWeapon = new GameObject();
+                    gear = newWeapon.AddComponent<Gear>();
+                    gear.Init(data);
+
+
+                }
+                else
+                {
+
+                    GameManager.instance.baseDamage +=data.damages[level];
+                }
+                level++;//레벨업 해줘야함
+                break;
+            case ItemData.ItemType.SpeedPerDamage:
+                if (level == 0)
+                {
+                    GameObject newWeapon = new GameObject();
+                    gear = newWeapon.AddComponent<Gear>();
+                    gear.Init(data);
+
+
+                }
+                else
+                {
+
+                    GameManager.instance.MoveSpeedPerDmg += data.damages[level];
+                }
+                level++;//레벨업 해줘야함
+                break;
+
         }
 
         

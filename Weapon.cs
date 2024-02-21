@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour
     public int prefabId;//풀 매니져 오브젝트에 prefabs의 순서이다.만약 두번쨰라면 1
     public float damage;
     public float criticalDamage;
-    public int projectile=2;
+    public int projectile=0;
     
     public int count; // 무기 개수
     public float speed;//한대 때리는데 걸리는 시간
@@ -111,7 +111,7 @@ public class Weapon : MonoBehaviour
                 {
                     timer = 0f;
 
-                    for(int index=0;index < projectile; index++)
+                    for(int index=0;index < projectile+GameManager.instance.projectileNum+2; index++)
                     {if (index == 0)
                             MultipleShot(0);
                         MultipleShot(index*3f);
@@ -129,21 +129,50 @@ public class Weapon : MonoBehaviour
                 if (timer > speed)
                 {
                     timer = 0f;
+                    if (GameManager.instance.projectileNum == 0)
+                    {
+                        PiercingShot(0);
+                    }
+                    else
+                    {
+                        for (int index = 0; index <=projectile + GameManager.instance.projectileNum; index++)
+                        {
+                            if (index == 0)
+                                PiercingShot(0);
 
-                    PiercingShot();
+                            PiercingShot(index * 3f);
+                            PiercingShot(index * (-3f));
 
+                        }
+                    }
+                    
 
                     //Wolves_Fang_Sword(); // 칼 모션은 나중에 하자
                 }
                 break;
 
-            case 8:  // 사격
+            case 8:  // 속사 사격
                 timer += Time.deltaTime;//기술 사이의 시간에 대한 로직
                 if (timer > speed)
                 {
                     timer = 0f;
+                    if (GameManager.instance.projectileNum == 0)
+                    {
+                        SnapShot(0);
+                    }
+                    else
+                    {
+                        for (int index = 0; index <= projectile + GameManager.instance.projectileNum; index++)
+                        {
+                            if (index == 0)
+                                SnapShot(0);
 
-                    SnapShot();
+                            SnapShot(index * 3f);
+                            SnapShot(index * (-3f));
+
+                        }
+                    }
+                    
 
 
                     //Wolves_Fang_Sword(); // 칼 모션은 나중에 하자
@@ -161,16 +190,31 @@ public class Weapon : MonoBehaviour
                 if (timer > speed)
                 {
                     timer = 0f;
+                    if (GameManager.instance.projectileNum == 0)
+                    {
+                        ThrowingKnife(0);
+                    }
+                    else
+                    {
+                        for (int index = 0; index <= projectile + GameManager.instance.projectileNum; index++)
+                        {
+                            if (index == 0)
+                                ThrowingKnife(0);
+
+                            ThrowingKnife(index*15f);
+                            ThrowingKnife(index*(-15f));
+
+                        }
+                    }
+
+
 
                     
-
-
-                    ThrowingKnife();
                     //Wolves_Fang_Sword(); // 칼 모션은 나중에 하자
                 }
                 break;
 
-                break;
+                
             case 11://총쏘기 나중에 도적 칼날 회수
                 timer += Time.deltaTime;//기술 사이의 시간에 대한 로직
                 if (timer > speed)
@@ -197,7 +241,7 @@ public class Weapon : MonoBehaviour
     public void LevelUp(float damage, int count, int ProjectileNum)
     {
         this.damage = damage;
-        Debug.Log(damage);
+        
         this.count += count;
         this.criticalDamage = this.damage * GameManager.instance.criticalMultiple;
         this.projectile += ProjectileNum;
@@ -248,7 +292,7 @@ public class Weapon : MonoBehaviour
                 break;
 
             case 3://회오리바람
-                speed = 250;
+                speed = 300;
                 
                 Cyclone();
                 break;
@@ -541,6 +585,7 @@ public class Weapon : MonoBehaviour
         if (randomValue < criticalChance)
         {
             isCritical = true;
+            criticalDamage = damage * GameManager.instance.criticalMultiple;
              // 크리티컬 데미지 계산
         }
         else
@@ -779,7 +824,7 @@ public class Weapon : MonoBehaviour
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Range);//소리
     }
 
-    void PiercingShot() // 다발 사격
+    void PiercingShot(float angle) // 관통 사격
     {
 
 
@@ -787,9 +832,12 @@ public class Weapon : MonoBehaviour
         mousePosition.z = 0f; // z축을 0으로 설정하여 2D 평면 상의 좌표로 고정
 
         // 플레이어를 바라보는 방향 계산
-        Vector3 direction = (mousePosition - transform.position).normalized;
+        Vector3 direction1 = (mousePosition - transform.position).normalized;
 
-
+        // 방향 벡터를 3도만큼 회전시킵니다.
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+        Vector3 direction = rotation * direction1;
+        direction = direction.normalized;
 
         Transform bullet = GameManager.instance.pool.Get(11).transform;//프리펩 가져옴
         bullet.position = transform.position;//발사체는 플레이어의 위치에서부터 발사됨
@@ -813,14 +861,14 @@ public class Weapon : MonoBehaviour
 
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Range);//소리
     }
-    void SnapShot()//연속 사격
+    void SnapShot(float angle)//연속 사격
     {
         if (!player.scanner.nearsetTarget)//타겟이 없다면
             return;
-
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);//
         Vector3 targetPos = player.scanner.randomTarget.position;//타겟 위치는 랜덤
         Vector3 dir = targetPos - transform.position;//방향
-        dir = dir.normalized;//dir에 크기까지 같이 있어서 노멀라이즈드
+        dir = (rotation*dir).normalized;//dir에 크기까지 같이 있어서 노멀라이즈드
 
         Transform bullet = GameManager.instance.pool.Get(2).transform;//프리펩 가져옴
         bullet.position = transform.position;//발사체는 플레이어의 위치에서부터 발사됨
@@ -884,17 +932,20 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    void ThrowingKnife() // 다발 사격
+    void ThrowingKnife(float angle) // 다발 사격
     {
-
 
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition); // 마우스 위치를 월드 좌표로 변환
         mousePosition.z = 0f; // z축을 0으로 설정하여 2D 평면 상의 좌표로 고정
 
         // 플레이어를 바라보는 방향 계산
-        Vector3 direction = (mousePosition - transform.position).normalized;
+        Vector3 direction1 = (mousePosition - transform.position).normalized;
 
+        // 방향 벡터를 3도만큼 회전시킵니다.
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+        Vector3 direction = rotation * direction1;
+        direction = direction.normalized;
 
 
         Transform bullet = GameManager.instance.pool.Get(12).transform;//프리펩 가져옴
@@ -935,10 +986,10 @@ public class Weapon : MonoBehaviour
         CriticalCal(GameManager.instance.criticalChance);
         if (isCritical == true)
         {
-            bullet.GetComponent<Bullet>().Init(criticalDamage, count, direction);//데미지와 관통횟구, 방향으로 init 호출
+            bullet.GetComponent<Bullet>().Init(criticalDamage+10, count, direction);//데미지와 관통횟구, 방향으로 init 호출
         }
         else
-            bullet.GetComponent<Bullet>().Init(damage, count, direction);//데미지와 관통횟구, 방향으로 init 호출
+            bullet.GetComponent<Bullet>().Init(damage+100, count, direction);//데미지와 관통횟구, 방향으로 init 호출
 
         //if(isCritical ==true){ 다른 소리 else)
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Range);//소리
