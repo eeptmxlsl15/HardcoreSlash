@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public float baseDamage;
     public float incDamage;
     public float projectileSpeed = 15f;
-    public int projectileNum;
+    public int projectileNum;//투사체 개수
     public int criticalChance=0;
     public float criticalMultiple;
     public int Range=1;//공격 범위
@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
         else if (difficult == 3)
             exp = exp + 3;
 
-        if (exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
+        if (exp >= nextExp[Mathf.Min(level, nextExp.Length-1)])
             //실제 레벨과 최대레벨-1 사이중 작은게 나오는데 
             //실제 레벨이 최대레벨 보다 높은경우 최대 레벨-1의 경험치로 고정됨
         {
