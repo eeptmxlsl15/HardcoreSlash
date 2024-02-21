@@ -1,7 +1,7 @@
 # HardcoreSlash
 
 ## 다운로드 링크
-https://drive.google.com/file/d/1Bk5JtMnBmpCoJDYA7nvH7j3NHKMoK29m/view?usp=sharing
+[https://drive.google.com/file/d/1Bk5JtMnBmpCoJDYA7nvH7j3NHKMoK29m/view?usp=sharing](https://drive.google.com/file/d/1Bk5JtMnBmpCoJDYA7nvH7j3NHKMoK29m/view?usp=sharing)
 
 ## 유튜브 영상
 https://www.youtube.com/watch?v=j_Gh-aQiiHA
