@@ -1,4 +1,8 @@
 # HardcoreSlash
+
+## 다운로드 링크
+https://drive.google.com/file/d/1Bk5JtMnBmpCoJDYA7nvH7j3NHKMoK29m/view?usp=sharing
+
 ## 게임 설명
 직업을 고르고 직업 고유 액티브 스킬을 고릅니다.<br/>
 맵에 나가 밑에서 올라오는 가스를 피해 몹을 잡습니다.<br/>
