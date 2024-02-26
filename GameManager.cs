@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     public List<int> ArcherSkills = new List<int> { 6,7,8 };
     public List<int> AssassinSkills = new List<int> { 9,10};
     public List<int> AllSkills = new List<int> { 12,13,14,15 };
-    public List<int> PickSkills;
+    public List<int> PickSkills = new List<int> { };
 
 
     void Awake()

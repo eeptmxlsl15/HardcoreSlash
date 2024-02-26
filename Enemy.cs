@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     public RuntimeAnimatorController[] animCon;
     public Rigidbody2D target;
     public Slider healthBarSlider;
-    bool isLive;
+    public bool isLive;
     
     Rigidbody2D rigid;
     Collider2D coll;

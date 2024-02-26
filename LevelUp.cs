@@ -68,8 +68,8 @@ public class LevelUp : MonoBehaviour
         else if (GameManager.instance.level == 0 && GameManager.instance.playerId == 1) //처음 고르는 전사인 경우
         {
             ran[0] = 3;//5개인경우 기이는 5지만 0 1 2 3 4이다
-            ran[1] = 3;
-            ran[2] = 3;
+            ran[1] = 4;
+            ran[2] = 4;
 
         }
         else if (GameManager.instance.level == 0 && GameManager.instance.playerId == 2) //처음 고르는 궁수인 경우
