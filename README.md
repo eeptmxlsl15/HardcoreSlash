@@ -1,8 +1,8 @@
 # HardcoreSlash
 
 ## 다운로드 링크
-[https://drive.google.com/file/d/1Bk5JtMnBmpCoJDYA7nvH7j3NHKMoK29m/view?usp=sharing](https://drive.google.com/file/d/1Bk5JtMnBmpCoJDYA7nvH7j3NHKMoK29m/view?usp=sharing)
-
+https://drive.google.com/file/d/1VP4AO_W9hyp1zOlgLrdb6OVqWxIB62iB/view?usp=drive_link<br/>
+버전 - 2024.02.27
 ## 유튜브 영상
 https://www.youtube.com/watch?v=j_Gh-aQiiHA
 
@@ -27,12 +27,13 @@ https://www.youtube.com/watch?v=j_Gh-aQiiHA
 맵 밑에서 올라오는 가스 구현<br/>
 배울 수 있는 공용 패시브 종류 4개로 제한<br/>
 스킬 안찍고 넘기는 기능<br/>
-전사의 강타 스킬의 시체 폭발 적용 - 24.02.27<br/>
-현재 배운 스킬 UI 추가 - 24.02.27<br/>
+전사의 강타 스킬의 시체 폭발 적용 - 24.02.26<br/>
+현재 배운 스킬 UI 추가 - 24.02.26<br/>
+인벤토리 기능 - 24.02.27<br/>
 
 ## 구현 계획
 
-인벤토리 기능<br/>
+
 아이템 기능<br/>
 아이템 드랍 기능<br/>
 맵 입장 전 무리 규모 설정<br/>
@@ -49,3 +50,6 @@ https://www.youtube.com/watch?v=j_Gh-aQiiHA
 잡몹들의 원거리 공격 추가<br/>
 아이템을 파는 npc 추가(은신처 , 혹은 맵에서 확률적으로 만남)<br/>
 poe같이 맵핑시 확률적으로 나타나는 컨텐츠 추가<br/>
+
+##수정 내역
+강타로 죽은 적들이 다시 살아나지 않는 버그 수정 - 24.02.27<br/>
