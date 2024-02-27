@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour
     }
     public void Init(float damage, int per, Vector3 dir)
     {
-        float firstdamage = (damage + GameManager.instance.baseDamage);//데미지는 무기 베이스 데미지와 크리티컬 데미지.
+        float firstdamage = (damage + GameManager.instance.baseDamage);//데미지는 무기 베이스 데미지와 크리티컬 데미지. 베이스 데미지는 추가 데미지
         // 크리티컬 데미지는 무기 데미지에만 영향을 끼친다
         float passiveAddDmg = GameManager.instance.player.moveSpeed * GameManager.instance.MoveSpeedPerDmg;//다른 패시브 효과로 올라가는 데미지
         

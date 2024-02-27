@@ -22,25 +22,26 @@ public class SmiteDead : MonoBehaviour
         if (player.transform.Find("Weapon 4") && enemy.isLive == false && flag == 1)
         {
             flag = 0;
-            Debug.Log("adad");
+            
             Vector3 direction = Vector3.zero;
 
             Transform bullet = GameManager.instance.pool.Get(13).transform;
             bullet.position = transform.position;
 
             //CriticalCal(GameManager.instance.criticalChance);
-            if (isCritical == true)
-            {
-                bullet.GetComponent<Bullet>().Init(1, -2, direction);//데미지와 관통횟구, 방향으로 init 호출
-            }
-            else
-                bullet.GetComponent<Bullet>().Init(1, -2, direction);//데미지와 관통횟구, 방향으로 init 호출
+            
+            
+            bullet.GetComponent<Bullet>().Init(1, -2, direction);//데미지와 관통횟구, 방향으로 init 호출
+            
+            
 
             //if(isCritical ==true){ 다른 소리 else)
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Range);//소리
             StartCoroutine(FadeOutAndDestroy(bullet));
             
         }
+        if (enemy.isLive == true)
+            flag = 1;
     }
 
     void CriticalCal(int criticalChance)
