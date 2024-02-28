@@ -7,7 +7,7 @@ public class InventoryItemDB : MonoBehaviour
     public static InventoryItemDB instance;
     public GameObject fieldItemPrefab;
     public Vector3[] pos;//드랍 위치
-    public List<IventoryItem> IventoryItemDB = new List<IventoryItem>();
+    public List<InventoryItem> inventoryItemDB = new List<InventoryItem>();
     private void Awake()
     {
         instance = this;
