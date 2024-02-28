@@ -5,6 +5,7 @@ https://drive.google.com/file/d/1VP4AO_W9hyp1zOlgLrdb6OVqWxIB62iB/view?usp=drive
 버전 - 2024.02.27
 ## 유튜브 영상
 https://www.youtube.com/watch?v=j_Gh-aQiiHA
+버전 - 2024.02.25
 
 ## 게임 설명
 직업을 고르고 직업 고유 액티브 스킬을 고릅니다.<br/>
