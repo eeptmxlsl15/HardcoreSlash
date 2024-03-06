@@ -14,29 +14,25 @@ public class InventoryUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("start");
         inven = Inventory.instance;
+
+        if (inven == null)
+        {
+            Debug.Log("Inventory instance is not assigned properly.");
+            return;
+        }
         slots = slotHolder.GetComponentsInChildren<Slot>();//자식 오브젝트들의 모든 컴포넌트들을 가져 올 수 있다. s 조심
         inven.onChangeItem += RedrawSlotUI;
         //inventoryPanel.SetActive(activeInventory);
         inven.onSlotCountChange += SlotChange;
+        Debug.Log(slots.Length);
     }
 
-    private void RedrawSlotUI()//반복문을 통해 슬롯들을 초기화하고 아이템의 개수만틈 슬롯을 채워넣음 
-    {
-       for(int i = 0; i < slots.Length; i++)
-        {
-            slots[i].RemoveSlot();
-        }
-
-       for(int i = 0; i < inven.items.Count; i++)
-        {
-            slots[i].item = inven.items[i];
-            slots[i].UpdateSlotUI();
-        }
-    }
 
     private void SlotChange(int val)//슬롯cnt 만큼만 슬롯 활성화
     {
+        Debug.Log(inven.SlotCnt);
         for (int i = 0; i < slots.Length; i++)
         {
             if (i < inven.SlotCnt)
@@ -58,12 +54,26 @@ public class InventoryUI : MonoBehaviour
             }
             else
                 inventoryPanel.transform.localScale = Vector3.zero;
-            Debug.Log("i");
+            
         }
     }
 
     public void AddSlot()
     {
         inven.SlotCnt++;
+    }
+    void RedrawSlotUI()//반복문을 통해 슬롯들을 초기화하고 아이템의 개수만틈 슬롯을 채워넣음 
+    {
+        
+       for(int i = 0; i < slots.Length; i++)
+        {
+            slots[i].RemoveSlot();
+        }
+
+       for(int i = 0; i < inven.items.Count; i++)
+        {
+            slots[i].item = inven.items[i];
+            slots[i].UpdateSlotUI();
+        }
     }
 }

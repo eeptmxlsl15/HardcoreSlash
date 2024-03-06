@@ -9,7 +9,7 @@ public class Slot : MonoBehaviour
 
     public void UpdateSlotUI()//인벤토리의 슬롯을 얻은 아이템으로 바꿔줌
     {
-        itemIcon.sprite = item.itemImage;
+        itemIcon.sprite = item.itemIcon;
         itemIcon.gameObject.SetActive(true);
     }
 

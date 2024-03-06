@@ -15,8 +15,15 @@ public class InventoryItemDB : MonoBehaviour
     }
 
     void Start()
-    {
-        
+    {for(int i =0; i < 3; i++)
+        {
+            GameObject go = Instantiate(fieldItemPrefab, pos[i], Quaternion.identity);
+
+            go.GetComponent<FieldItem>().SetItem(inventoryItemDB[Random.Range(0, inventoryItemDB.Count)]);
+        }
     }
+
+    //여기부터 
+    
 
 }

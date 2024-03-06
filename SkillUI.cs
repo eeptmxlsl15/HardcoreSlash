@@ -43,14 +43,13 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         // 마우스 커서가 오브젝트 위에 있을 때 실행되는 코드
-        Debug.Log("Mouse entered!"+ item[0]);
-
+        
         
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         // 마우스 커서가 오브젝트에서 벗어날 때 실행되는 코드
-        Debug.Log("Mouse exited!");
+        
     }
 }

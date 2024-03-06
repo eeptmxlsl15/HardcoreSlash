@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 
 {
+    public Transform player;
     public Vector2 inputVec;//방향키 인풋
     public float moveSpeed;
     public Scanner scanner;//우리가 만든 클래스를 컴포넌트로 가져옴
@@ -22,15 +23,21 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         spriter = GetComponent<SpriteRenderer>();
         scanner = GetComponent<Scanner>();
+        
     }
-
+    public void CharacterChose()
+    {
+        player.localScale = new Vector3(1, 1, 0);
+        anim.runtimeAnimatorController = animCon[GameManager.instance.playerId];
+    }
+    /*
     void OnEnable()//캐릭터 애니메이션 변경 로직
     {
 
         //speed *= Character.Speed;//캐릭 특성
         anim.runtimeAnimatorController = animCon[GameManager.instance.playerId];
     }
-
+    */
     void Update()
     {
         if (!GameManager.instance.isLive)//시간이 멈췄다면 밑으로 안가서 시간이 흐르지 않음

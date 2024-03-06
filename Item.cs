@@ -73,7 +73,7 @@ public class Item : MonoBehaviour
   
     public void OnClick() // 아이템이 선택 되었을때
     {
-        Debug.Log(data.itemId);
+        
         if (!GameManager.instance.PickSkills.Contains(data.itemId))
         {
             GameManager.instance.PickSkills.Add(data.itemId);

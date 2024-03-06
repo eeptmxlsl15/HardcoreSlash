@@ -14,17 +14,21 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
     private void Awake()
     {
+        Debug.Log("awake");
         if (instance != null)
         {
+            Debug.Log("싱글톤");
             Destroy(gameObject);
             return;
         }
+        instance = this;
     }
     #endregion
     public delegate void OnSlotCountChange(int val);//아이템 슬롯ui에 추가되게 함
     // 인벤토리의 수를 다른것들이 다 알수 있게 해주는대리자 정의
 
     public OnSlotCountChange onSlotCountChange;//대리자 인스턴스화
+
     public delegate void OnChangeItem();
     public OnChangeItem onChangeItem;
 
@@ -42,7 +46,8 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        
+        //slotCnt = 49;
+        SlotCnt = 49;
     }
 
     // Update is called once per frame
@@ -54,6 +59,7 @@ public class Inventory : MonoBehaviour
     public bool Additem(InventoryItem _item )//획득한 아이템을 리스트에items  추가
     {
         items.Add(_item);
+        
         if(onChangeItem!=null)
             onChangeItem.Invoke();
         return true;
